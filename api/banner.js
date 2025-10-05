@@ -7,13 +7,11 @@ export default async function handler(req, res) {
     return res.status(400).json({ error: "Missing token or image_url" });
 
   try {
-    // Resmi fetch ile çek
     const img = await fetch(image_url);
     const arrayBuffer = await img.arrayBuffer();
     const base64 = Buffer.from(arrayBuffer).toString("base64");
     const bannerData = `data:image/png;base64,${base64}`;
 
-    // Discord API PATCH isteği
     const response = await fetch("https://discord.com/api/v10/users/@me", {
       method: "PATCH",
       headers: {
